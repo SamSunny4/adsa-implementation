@@ -3,48 +3,46 @@ Dynamic Array Implementation in Python
 Demonstrates automatic resizing with doubling/halving capacity
 """
 
-class DynamicArray:
-    def __init__(self):
-        self.arr = [None]
-        self.size = 0
-        self.capacity = 1
-    
-    def show(self):
-        """Display current array state"""
-        elements = [str(self.arr[i]) for i in range(self.size)]
-        print(f"sz={self.size} cap={self.capacity} [{','.join(elements)}]")
-    
-    def resize(self, new_capacity):
-        """Resize the internal array to new capacity"""
-        new_arr = [None] * new_capacity
-        for i in range(self.size):
-            new_arr[i] = self.arr[i]
-        self.arr = new_arr
-        self.capacity = new_capacity
-    
-    def push(self, value):
-        """Add element to the end of array"""
-        if self.size == self.capacity:
-            self.resize(self.capacity * 2)
-        self.arr[self.size] = value
-        self.size += 1
-        self.show()
-    
-    def pop(self):
-        """Remove element from the end of array"""
-        if self.size == 0:
-            print("Array is empty!")
-            return
-        
-        self.size -= 1
-        if self.size > 0 and self.size <= self.capacity // 4:
-            self.resize(self.capacity // 2)
-        self.show()
+# Remove the DynamicArray class and replace with equivalent functions and variables
+arr = [None]
+size = 0
+capacity = 1
 
+def show():
+    """Display current array state"""
+    elements = [str(arr[i]) for i in range(size)]
+    print(f"sz={size} cap={capacity} [{','.join(elements)}]")
+
+def resize(new_capacity):
+    """Resize the internal array to new capacity"""
+    global arr, capacity
+    new_arr = [None] * new_capacity
+    for i in range(size):
+        new_arr[i] = arr[i]
+    arr = new_arr
+    capacity = new_capacity
+
+def push(value):
+    """Add element to the end of array"""
+    global size, capacity
+    if size == capacity:
+        resize(capacity * 2)
+    arr[size] = value
+    size += 1
+    show()
+
+def pop():
+    """Remove element from the end of array"""
+    global size, capacity
+    if size == 0:
+        print("Array is empty!")
+        return
+    size -= 1
+    if size > 0 and size <= capacity // 4:
+        resize(capacity // 2)
+    show()
 
 def main():
-    dyn_array = DynamicArray()
-    
     print("Dynamic Array Operations:")
     print("1. Push value")
     print("2. Pop value")
@@ -57,11 +55,11 @@ def main():
             
             if choice == 1:
                 value = int(input("Enter value: "))
-                dyn_array.push(value)
+                push(value)
             elif choice == 2:
-                dyn_array.pop()
+                pop()
             elif choice == 3:
-                dyn_array.show()
+                show()
             elif choice == 4:
                 break
             else:
